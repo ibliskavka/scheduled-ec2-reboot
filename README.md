@@ -1,6 +1,6 @@
 # Scheduled EC2 Reboot
 
-This is a tiny lambda which can [reboot EC2 instances](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RebootInstances.html) on a cron schedule.
+This is a tiny lambda which can [reboot EC2 instances](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RebootInstances.html) on a [cron schedule](https://docs.aws.amazon.com/eventbridge/latest/userguide/scheduled-events.html).
 
 Use this project as an example to create other scheduled maintenance scripts in your AWS environment.
 
@@ -35,3 +35,7 @@ Deployment errors will be visible in your AWS CloudFormation console. Look for y
 Lambda execution errors can be found in the AWS Lambda console. Search for the lambda function who's name starts with `{StackName}-ScheduledReboot-{...}` and check the Monitoring tab for execution history and error rates.
 
 Additional Information: [RebootInstances Service Reference](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RebootInstances.html)
+
+## Removal
+
+To remove the lambda, simply delete the CloudFormation stack.
