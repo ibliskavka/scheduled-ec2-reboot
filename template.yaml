@@ -17,7 +17,7 @@ Resources:
     Properties:
       Description: !Sub "A Lambda function that triggers a scheduled EC2 reboot. Schedule: ${Schedule}"
       Runtime: nodejs10.x
-      Handler: src/handlers/scheduled-reboot.handler
+      Handler: src/scheduled-reboot.handler
       Events:
         CloudWatchEvent:
           Type: Schedule

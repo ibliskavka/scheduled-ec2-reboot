@@ -1,13 +1,10 @@
 {
     "name": "scheduled-ec2-reboot",
-    "description": "Reboot an ec2 instance on a scheduled interval",
+    "description": "Reboot ec2 instances on a scheduled interval",
     "version": "0.0.1",
     "private": true,
     "dependencies": {},
     "devDependencies": {
         "aws-sdk": "^2.785.0"
-    },
-    "scripts": {
-        "test": "jest"
     }
 }
