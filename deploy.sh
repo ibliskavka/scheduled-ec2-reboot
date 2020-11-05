@@ -9,7 +9,7 @@ STACK_NAME="scheduled-ec2-reboot-example"
 
 # Every day at 12 PM UTC
 SCHEDULE="\"cron(0 12 * * ? *)\""
-EC2_ID_CSV="test,test"
+EC2_ID_CSV="i-0d1c238c3ab73c8fa,i-0926dab634dbff0b5"
 
 sam build  --region $REGION --profile $PROFILE --debug
 

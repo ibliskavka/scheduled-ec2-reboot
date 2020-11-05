@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
 
-Description: A Lambda function that triggers a scheduled EC2 reboot
+Description: A Lambda function that triggers a scheduled EC2 reboot. This lambda has access to reboot any instance - adjust your permissions as needed.
 
 Parameters:
   Schedule:
@@ -11,7 +11,7 @@ Parameters:
     Type: List<AWS::EC2::Instance::Id>
     Description: Which EC2 instances should be rebooted.
 
-Resources:  
+Resources:
   ScheduledReboot:
     Type: AWS::Serverless::Function
     Properties:
@@ -25,11 +25,15 @@ Resources:
             Schedule: !Ref Schedule
       Environment:
         Variables:
-          EC2_ID_CSV: !Ref Ec2Instances
+          EC2_ID_CSV: !Join
+            - ","
+            - !Ref Ec2Instances
       Policies:
         Statement:
           - Effect: Allow
             Action: ec2:RebootInstances
-            Resource: "*"
+            Resource:
+              # This gives the lambda access to reboot any instance in this region. Add ARNs to reduce access.
+              - !Sub "arn:aws:ec2:${AWS::Region}:${AWS::AccountId}:instance/*"
       MemorySize: 128
       Timeout: 100
