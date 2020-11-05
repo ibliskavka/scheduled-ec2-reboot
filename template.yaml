@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+
+Description: A Lambda function that triggers a scheduled EC2 reboot
+
+Parameters:
+  Schedule:
+    Type: String
+    Description: "Expression Rules: https://docs.aws.amazon.com/eventbridge/latest/userguide/scheduled-events.html"
+  Ec2Instances:
+    Type: List<AWS::EC2::Instance::Id>
+    Description: Which EC2 instances should be rebooted.
+
+Resources:  
+  ScheduledReboot:
+    Type: AWS::Serverless::Function
+    Properties:
+      Description: !Sub "A Lambda function that triggers a scheduled EC2 reboot. Schedule: ${Schedule}"
+      Runtime: nodejs10.x
+      Handler: src/handlers/scheduled-reboot.handler
+      Events:
+        CloudWatchEvent:
+          Type: Schedule
+          Properties:
+            Schedule: !Ref Schedule
+      Environment:
+        Variables:
+          EC2_ID_CSV: !Ref Ec2Instances
+      Policies:
+        Statement:
+          - Effect: Allow
+            Action: ec2:RebootInstances
+            Resource: "*"
+      MemorySize: 128
+      Timeout: 100
